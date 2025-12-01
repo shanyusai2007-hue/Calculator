@@ -1,2 +1,2 @@
-# Calculator
-basic calculator using functions for CSE project
+## Calculator
+Basic calculator using functions for CSE project
