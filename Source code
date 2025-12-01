@@ -1,0 +1,172 @@
+#include <stdio.h>
+#include <math.h>
+
+#define PI 3.14159265
+
+// convert degrees to radians
+double toRad(double d) {
+    return d * (PI/180.0);
+}
+
+// reverse digits of a number
+int revNum(int n) {
+    int r = 0;
+    while(n != 0) {
+        r = r*10 + (n%10);
+        n /= 10;
+    }
+    return r;
+}
+
+// check palindrome
+int checkPal(int n) {
+    if(n < 0) return 0;
+    return n == revNum(n);
+}
+
+// armstrong (3-digit)
+int checkArm(int n) {
+    int t = n, s = 0, d;
+    while(t>0) {
+        d = t%10;
+        s += d*d*d;
+        t /= 10;
+    }
+    return s == n;
+}
+
+// factorial without recursion
+long long fact(int n) {
+    if(n<0) return -1;
+    long long f = 1;
+    for(int i=1;i<=n;i++)
+        f*=i;
+    return f;
+}
+
+// check prime
+int prime(int n) {
+    if(n<=1) return 0;
+    for(int i=2;i*i<=n;i++)
+        if(n%i==0) return 0;
+    return 1;
+}
+
+int main() {
+
+    int ch;
+    double a, b;
+
+    printf("Simple Calculator Program\n");
+
+    while(1) {
+
+        printf("\n----- MENU -----\n");
+        printf("1.Addition\n2.Subtraction\n3.Multiplication\n4.Division\n");
+        printf("5.Square root\n6.Power\n7.Log10\n8.Ln\n9.Exponential\n10.Absolute value\n");
+        printf("11.Sin\n12.Cos\n13.Tan\n");
+        printf("14.Factorial\n15.Reverse\n16.Palindrome\n17.Armstrong\n18.Prime\n");
+        printf("19.Ceil\n20.Floor\n21.Max\n");
+        printf("22.Modular Division\n23.Exit\n");
+
+        printf("Enter choice: ");
+        scanf("%d", &ch);
+
+        if(ch < 1 || ch > 23) {
+            printf("Invalid choice!\n");
+            break;
+        }
+
+        // functions needing 2 values
+        if(ch==1 || ch==2 || ch==3 || ch==4 || ch==6 || ch==21 || ch==22) {
+            printf("Enter a: ");
+            scanf("%lf",&a);
+            printf("Enter b: ");
+            scanf("%lf",&b);
+        }
+        else {
+            printf("Enter value: ");
+            scanf("%lf",&a);
+        }
+
+        switch(ch)
+        {
+            case 1: printf("Ans = %.4lf\n", a+b); break;
+            case 2: printf("Ans = %.4lf\n", a-b); break;
+            case 3: printf("Ans = %.4lf\n", a*b); break;
+            case 4:
+                if(b==0) printf("Error: divide by zero\n");
+                else 
+                    printf("Ans = %.4lf\n", a/b);
+                break;
+
+            case 5:
+                if(a<0) printf("Error: sqrt negative\n");
+                else 
+                    printf("Ans = %.4lf\n", sqrt(a));
+                break;
+
+            case 6: printf("Ans = %.4lf\n", pow(a,b)); break;
+
+            case 7:
+                if(a<=0) printf("Invalid input for log10\n");
+                else 
+                    printf("Ans = %.4lf\n", log10(a));
+                break;
+
+            case 8:
+                if(a<=0) printf("Invalid input for ln\n");
+                else 
+                    printf("Ans = %.4lf\n", log(a));
+                break;
+
+            case 9: printf("Ans = %.4lf\n", exp(a)); break;
+            case 10: printf("Ans = %.4lf\n", fabs(a)); break;
+
+            case 11: printf("Sin = %.4lf\n", sin(toRad(a))); break;
+            case 12: printf("Cos = %.4lf\n", cos(toRad(a))); break;
+            case 13: 
+                printf("Tan = %.4lf\n", tan(toRad(a))); 
+                break;
+
+            case 14: {
+                int n=(int)a;
+                if(n<0 || a!=n) printf("Factorial needs positive integer\n");
+                else 
+                    printf("Fact = %lld\n", fact(n));
+            } break;
+
+            case 15:
+                printf("Reverse = %d\n", revNum((int)a));
+                break;
+
+            case 16:
+                printf("%d is %sa palindrome\n", (int)a,
+                       checkPal((int)a) ? "" : "not ");
+                break;
+
+            case 17:
+                printf("%d is %san Armstrong number\n",
+                       (int)a, checkArm((int)a) ? "" : "not ");
+                break;
+
+            case 18:
+                printf("%d is %sprime\n",
+                       (int)a, prime((int)a)? "" : "not ");
+                break;
+
+            case 19: printf("%.4lf\n", ceil(a)); break;
+            case 20: printf("%.4lf\n", floor(a)); break;
+            case 21: printf("Max = %.4lf\n", (a>b?a:b)); break;
+            case 22: 
+                if(b==0) printf("Error: divide by zero\n");
+                else   
+                    printf("Remainder = %d\n", (int)a % (int)b); break;
+            case 23: printf("Exiting...\n"); 
+            default:
+                printf("Bye!\n");
+        }
+    }
+
+    return 0;
+}
